@@ -18,17 +18,29 @@ function fetchWeather(city) {
     fetch(`https://worker.cdntest.workers.dev/?city=${city}`)
         .then(response => response.json())
         .then(data => {
-            const weatherIcon = document.getElementById(`weather-${city}`);
             const weatherCondition = data.current.condition.text.toLowerCase();
+            const weatherIcon = document.getElementById(`weather-${city}`);
             
-            if (weatherCondition.includes("sunny")) weatherIcon.src = "icons/sunny.png";
-            else if (weatherCondition.includes("rain")) weatherIcon.src = "icons/rainy.png";
-            else if (weatherCondition.includes("wind")) weatherIcon.src = "icons/windy.png";
-            else if (weatherCondition.includes("cloud")) weatherIcon.src = "icons/cloudy.png";
-            else if (weatherCondition.includes("snow")) weatherIcon.src = "icons/snowy.png";
+            // Determine the weather based on the condition text
+            if (weatherCondition.includes("sunny")) {
+                weatherIcon.src = "icons/sunny.png";
+            } else if (weatherCondition.includes("clear")) {
+                weatherIcon.src = "icons/clear.png"; // Use a clear icon for "Clear"
+            } else if (weatherCondition.includes("rain")) {
+                weatherIcon.src = "icons/rainy.png";
+            } else if (weatherCondition.includes("wind")) {
+                weatherIcon.src = "icons/windy.png";
+            } else if (weatherCondition.includes("cloud")) {
+                weatherIcon.src = "icons/cloudy.png";
+            } else if (weatherCondition.includes("snow")) {
+                weatherIcon.src = "icons/snowy.png";
+            } else {
+                weatherIcon.src = "icons/default.png"; // Default icon for unknown conditions
+            }
         })
         .catch(error => console.error("Error fetching weather data:", error));
 }
+
 
 function updateClocks() {
     const selectedTime = new Date(mainTimeInput.value || new Date());
