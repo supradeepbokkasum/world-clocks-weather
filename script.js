@@ -15,7 +15,7 @@ function createClockWidget(city) {
 }
 
 function fetchWeather(city) {
-    fetch(`/worker?city=${city}`)
+    fetch(`https://worker.cdntest.workers.dev/?city=${city}`)
         .then(response => response.json())
         .then(data => {
             const weatherIcon = document.getElementById(`weather-${city}`);
@@ -26,7 +26,8 @@ function fetchWeather(city) {
             else if (weatherCondition.includes("wind")) weatherIcon.src = "icons/windy.png";
             else if (weatherCondition.includes("cloud")) weatherIcon.src = "icons/cloudy.png";
             else if (weatherCondition.includes("snow")) weatherIcon.src = "icons/snowy.png";
-        });
+        })
+        .catch(error => console.error("Error fetching weather data:", error));
 }
 
 function updateClocks() {
